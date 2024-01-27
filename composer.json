@@ -1,0 +1,18 @@
+{
+    "name": "brian/my-mvc-blog",
+    "description": "A Light Weight PHP Application",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "app\\": "app/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Brian"
+        }
+    ],
+    "minimum-stability": "beta",
+    "require": {}
+}
