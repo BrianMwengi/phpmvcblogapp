@@ -49,6 +49,7 @@ $routes = [
          'admin/comments/delete/([0-9]+)' => ['controller' => '\app\controllers\CommentController', 'method' => 'delete'],
          // User Auth Routes
          'users/store' => ['controller' => '\app\controllers\UserController', 'method' => 'store'],
+         'users/authenticate' => ['controller' => '\app\controllers\UserController', 'method' => 'authenticate'],
     ]  
 ];
 
