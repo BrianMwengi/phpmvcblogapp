@@ -1,4 +1,14 @@
 <div>
+    <!-- Display message -->
+    <?php if (isset($_SESSION['message'])): ?>
+        <div id="message" class="alert <?php echo strpos($_SESSION['message'], 'error') !== false ? 'alert-danger' : 'alert-success' ?> text-center">
+            <?php 
+                echo $_SESSION['message']; 
+                unset($_SESSION['message']);
+                ?>
+                </div>
+    <?php endif; ?>
+    
     <h4>Login</h4>
     <!-- Login form -->
     <form method="POST" action="/users/authenticate">
