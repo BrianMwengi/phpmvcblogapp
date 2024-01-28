@@ -27,9 +27,11 @@ $routes = [
         'admin/categories' => ['controller' => '\app\controllers\CategoryController', 'method' => 'index'],
         'admin/categories/edit/([0-9]+)' => ['controller' => '\app\controllers\CategoryController', 'method' => 'edit'],
         'admin/categories/posts/([0-9]+)' => ['controller' => '\app\controllers\CategoryController', 'method' => 'showPosts'],
-
-           // Admin Comment Routes
-           'admin/comments/edit/([0-9]+)' => ['controller' => '\app\controllers\CommentController', 'method' => 'edit'],
+        // Admin Comment Routes
+        'admin/comments/edit/([0-9]+)' => ['controller' => '\app\controllers\CommentController', 'method' => 'edit'],
+        // User Auth Routes
+        'users/register' => ['controller' => '\app\controllers\UserController', 'method' => 'register'],
+        'users/login' => ['controller' => '\app\controllers\UserController', 'method' => 'showLoginForm'],
         // Add more routes for other controllers and actions
     ],
     'POST' => [
@@ -45,6 +47,8 @@ $routes = [
          'admin/comments/update/([0-9]+)' => ['controller' => '\app\controllers\CommentController', 'method' => 'update'],
          'comments/store' => ['controller' => '\app\controllers\CommentController', 'method' => 'store'],
          'admin/comments/delete/([0-9]+)' => ['controller' => '\app\controllers\CommentController', 'method' => 'delete'],
+         // User Auth Routes
+         'users/store' => ['controller' => '\app\controllers\UserController', 'method' => 'store'],
     ]  
 ];
 
