@@ -88,15 +88,14 @@ class UserController {
             header('Location: /admin/posts');
         } else {
             // If user is not an admin, redirect to a general user page
-            header('Location: /views/posts'); // Replace with the appropriate user page
+            header('Location: /'); // Replace with the appropriate user page
             }
             exit();
             }
 
         // Handle the user logout process
         public function logout() {
-            // Start the session, clear all session variables, and destroy the session
-            session_start();
+            // Clear all session variables, and destroy the session
             session_unset();
             session_destroy();
             // Redirect to the login page after logout
