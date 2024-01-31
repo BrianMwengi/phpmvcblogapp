@@ -40,7 +40,7 @@ class UserController {
     
     // Display the login form
     public function showLoginForm() {
-        require __DIR__ . '/app/views/users/login.php';
+        require BASE_DIR . '/app/views/users/login.php';
     }
 
     // Authenticate the user
