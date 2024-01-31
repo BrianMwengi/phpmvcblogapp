@@ -5,7 +5,7 @@ namespace app\controllers;
 require_once __DIR__ . '/../models/Post.php';
 require_once __DIR__ . '/../models/Comment.php';
 
-class AdminController {
+class AdminController extends AuthController {
     private $model;
 
     public function __construct() {
@@ -14,6 +14,7 @@ class AdminController {
 
     // Read: Display a list of posts
     public function index() {
+        $this->ensureAdmin();
        // Determine the current page number
        $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
        // Define how many posts you want per page
@@ -31,6 +32,7 @@ class AdminController {
     }
     
     public function create() {
+        $this->ensureAdmin();
         // Create an instance of the Category model
         $categoryModel = new \app\models\Category;
 
@@ -43,6 +45,7 @@ class AdminController {
 
     // Read: Display a single post
     public function show($id) {
+        $this->ensureAdmin();
         // Fetch the post with the given ID
         $post = $this->model->getPost($id);
 
@@ -62,6 +65,7 @@ class AdminController {
 
     // Create: Store a new post
     public function store($postData) {
+        $this->ensureAdmin();
         // Retrieve form data
         $title = $postData['title'];
         $content = $postData['content'];
@@ -153,6 +157,7 @@ class AdminController {
     } 
 
     public function edit($id) {
+        $this->ensureAdmin();
         $post = $this->model->getPost($id);
         // Fetch categories
         $categoryModel = new \app\models\Category;
@@ -163,6 +168,7 @@ class AdminController {
 
     // Update: Update an existing post
     public function update($postData, $id) {
+        $this->ensureAdmin();
         $title = $postData['title'];
         $content = $postData['content'];
         $category_id = $postData['category_id'];
@@ -248,6 +254,7 @@ class AdminController {
 
     // Delete: Remove a post
     public function delete($id) {
+        $this->ensureAdmin();
         $this->model->deletePost($id);
         // Redirect or display success message
         header('Location: /admin/posts');
