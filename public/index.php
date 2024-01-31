@@ -6,7 +6,8 @@ error_reporting(E_ALL);
 
 define('BASE_PATH', __DIR__ . '/');
 
-require __DIR__ . '/../vendor/autoload.php';
+require BASE_DIR . '/vendor/autoload.php';
+require BASE_DIR . '/utils.php';
 
 // Extract the path component from the full URL of the current request
 $request = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
