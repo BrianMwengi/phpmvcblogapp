@@ -2,7 +2,7 @@
 
 namespace app\controllers;
 
-require_once __DIR__ . '/../models/Category.php';
+require_once BASE_DIR . '/app/models/Category.php';
 
 class CategoryController extends AuthController {
     private $model;
@@ -15,13 +15,13 @@ class CategoryController extends AuthController {
         $this->ensureAdmin();
         // Fetch all categories
         $categories = $this->model->getCategories(); 
-        require __DIR__ . '/../views/admin/categories/index.php';
+        require BASE_DIR . '/app/views/admin/categories/index.php';
     }
 
     public function create() {
         $this->ensureAdmin();
         // Display the category creation form
-        require __DIR__ . '/../views/admin/categories/create.php';
+        require BASE_DIR . '/app/views/admin/categories/create.php';
     }
 
     public function showPosts($categoryId) {
@@ -32,7 +32,7 @@ class CategoryController extends AuthController {
 
         $posts = $this->model->getPosts($categoryId);
         // A view that lists posts in this category
-        require __DIR__ . '/../views/admin/categories/posts.php'; 
+        require BASE_DIR . '/app/views/admin/categories/posts.php'; 
     }
 
     public function store($data) {
@@ -48,7 +48,7 @@ class CategoryController extends AuthController {
         if (!$category) {
             die('Category not found');
         }
-        require __DIR__ . '/../views/admin/categories/edit.php';
+        require BASE_DIR . '/../views/admin/categories/edit.php';
     }
 
     public function update($id, $data) {
