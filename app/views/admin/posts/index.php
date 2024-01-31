@@ -8,12 +8,20 @@
             ?>
         </div>
     <?php endif; ?>
-      <div style="text-align: right;">
+    <div style="text-align: right;">
         <!-- Create Post Button -->
         <a href="/admin/posts/create">Create New Post</a>
+        | <!-- Add separator for clarity -->
         <a href="/admin/categories/create">Create Categories</a>
+        | <!-- Add separator for clarity -->
+        <!-- User Login/Logout Links -->
+        <?php if (isLoggedIn()): ?>
+            <a href="/users/logout">Logout</a>
+        <?php else: ?>
+            <a href="/users/login">Login</a>
+        <?php endif; ?>
     </div>
-
+    
     <?php foreach ($posts as $post): ?>
         <div style="margin-bottom: 20px; margin-top: 20px;">
             <div>
