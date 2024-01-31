@@ -36,6 +36,7 @@ $routes = [
         // User Auth Routes
         'users/register' => ['controller' => '\app\controllers\UserController', 'method' => 'register'],
         'users/login' => ['controller' => '\app\controllers\UserController', 'method' => 'showLoginForm'],
+        'users/logout' => ['controller' => '\app\controllers\UserController', 'method' => 'logout'],
         // Add more routes for other controllers and actions
     ],
     'POST' => [
