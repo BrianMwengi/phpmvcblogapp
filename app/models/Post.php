@@ -3,7 +3,7 @@
 namespace app\models;
 
 // Include database configuration file
-require_once __DIR__ . '/../../config/db.php';
+require_once BASE_DIR . '/config/db.php';
 
 // Define class for managing posts
 class Post {
