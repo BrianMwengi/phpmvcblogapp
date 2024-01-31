@@ -20,6 +20,7 @@ class CommentController {
     }
 
     public function edit($id) {
+        $this->ensureAdmin();
         // Get the comment from the database
         $comment = $this->model->getCommentById($id);
     
@@ -44,6 +45,7 @@ class CommentController {
     }
     
     public function update($data, $id) {
+        $this->ensureAdmin();
         $data = $_POST;
         $result = $this->model->updateComment($id, $data); // Update the comment
         if (isset($data['post_id']) && !empty($data['post_id'])) {
@@ -57,6 +59,7 @@ class CommentController {
     }
     
     public function delete($id) {
+        $this->ensureAdmin();
       // Delete the comment
      $this->model->deleteComment($id);
      // Redirect to the related post or a default page if successful
