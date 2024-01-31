@@ -4,7 +4,7 @@ namespace app\controllers;
 
 require_once __DIR__ . '/../models/Category.php';
 
-class CategoryController {
+class CategoryController extends AuthController {
     private $model;
 
     public function __construct() {
@@ -12,12 +12,14 @@ class CategoryController {
     }
 
     public function index() {
+        $this->ensureAdmin();
         // Fetch all categories
         $categories = $this->model->getCategories(); 
         require __DIR__ . '/../views/admin/categories/index.php';
     }
 
     public function create() {
+        $this->ensureAdmin();
         // Display the category creation form
         require __DIR__ . '/../views/admin/categories/create.php';
     }
@@ -34,12 +36,14 @@ class CategoryController {
     }
 
     public function store($data) {
+        $this->ensureAdmin();
         // Create a new category
         $this->model->create($data);
         header('Location: /admin/categories');
     }
     
     public function edit($id) {
+        $this->ensureAdmin();
         $category = $this->model->getCategory($id);
         if (!$category) {
             die('Category not found');
@@ -48,11 +52,13 @@ class CategoryController {
     }
 
     public function update($id, $data) {
+        $this->ensureAdmin();
         $this->model->updateCategory($id, $data);
         header('Location: /admin/categories');
     }
 
     public function delete($id) {
+      $this->ensureAdmin();
       $this->model->deleteCategory($id);
       header('Location: /admin/categories');         
     }
