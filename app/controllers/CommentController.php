@@ -2,9 +2,9 @@
 
 namespace app\controllers;
 
-require_once __DIR__ . '/../models/Comment.php';
+require_once BASE_DIR . '/app/models/Comment.php';
 
-class CommentController {
+class CommentController extends AuthController {
     private $model;
 
     public function __construct() {
@@ -41,7 +41,7 @@ class CommentController {
         }
     
         // Include the edit form view, pass both comment and post
-        require __DIR__ . '/../views/admin/comments/edit.php';
+        require BASE_DIR . '/app/views/admin/comments/edit.php';
     }
     
     public function update($data, $id) {
