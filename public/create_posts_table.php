@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__ . '/../config/db.php';
+require BASE_DIR . '/config/db.php';
 
 $db = new Database;
 
