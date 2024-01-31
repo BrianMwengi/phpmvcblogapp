@@ -2,7 +2,7 @@
 
 namespace app\controllers;
 
-require_once __DIR__ . '/../models/User.php';
+require_once BASE_DIR . '/app/models/User.php';
 
 class UserController {
     private $model;
@@ -14,7 +14,7 @@ class UserController {
 
     // Display the registration form
     public function register() {
-        require __DIR__ . '/../views/users/register.php';
+        require BASE_DIR . '/app/views/users/register.php';
     }
 
     // Handle the user registration request
@@ -40,7 +40,7 @@ class UserController {
     
     // Display the login form
     public function showLoginForm() {
-        require __DIR__ . '/../views/users/login.php';
+        require __DIR__ . '/app/views/users/login.php';
     }
 
     // Authenticate the user
