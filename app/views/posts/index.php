@@ -1,4 +1,7 @@
-<?php foreach ($posts as $post): ?>
+<?php 
+// Generate the specific content for this page
+ob_start(); // Start output buffering
+foreach ($posts as $post): ?>
         <div style="margin-bottom: 20px; margin-top: 20px;">
             <div>
                 <h2><?php echo htmlspecialchars($post->title, ENT_QUOTES); ?></h2>
@@ -27,7 +30,11 @@
         </ul>
     </nav>
 </div>
+<?php
+$content = ob_get_clean(); // Store buffered content in $content
 
+// Include the layout
+include BASE_DIR . '/public/Layouts/layout.php'; ?>
 
 
 
