@@ -17,3 +17,21 @@
         xhr.send("id=" + postId);
     }
 }
+
+// JavaScript delete functionality for comments
+function deleteComment(commentId) {
+    if (confirm("Are you sure you want to delete this comment?")) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/admin/comments/delete/" + commentId, true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onload = function() {
+            if (this.status === 200) {
+                // Handle success - remove the comment from the page or reload
+                location.reload();
+            } else {
+                alert("Error deleting comment.");
+            }
+        };
+        xhr.send("id=" + commentId);
+    }
+}
