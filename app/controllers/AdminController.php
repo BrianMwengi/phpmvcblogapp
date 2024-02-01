@@ -255,8 +255,11 @@ class AdminController extends AuthController {
     // Delete: Remove a post
     public function delete($id) {
         $this->ensureAdmin();
-        $this->model->deletePost($id);
-        // Redirect or display success message
-        header('Location: /admin/posts');
+        $postDeleted = $this->model->deletePost($id);
+            if ($postDeleted) {
+                header('Location: /admin/posts');
+            } else {
+                die('Comment not found');
+            }
+        }        
     }
-}
