@@ -1,4 +1,4 @@
-<?php 
+<?php
 // Generate the specific content for this page
 ob_start(); // Start output buffering
 foreach ($posts as $post):
@@ -31,19 +31,17 @@ foreach ($posts as $post):
       <ul class="pagination">
           <?php for ($i = 1; $i <= $totalPages; $i++): ?>
               <li class="page-item <?php echo $i == $currentPage ? 'active' : ''; ?>">
-                  <a class="page-link" href="/posts?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                  <a class="page-link" href="/?page=<?php echo $i; ?>"><?php echo $i; ?></a>
               </li>
           <?php endfor; ?>
       </ul>
    </nav>
+
 <?php
 $content = ob_get_clean(); // Store buffered content in $content
 
 // Include the layout
 include BASE_DIR . '/public/Layouts/layout.php'; ?>
-
-
-
 
 
 
