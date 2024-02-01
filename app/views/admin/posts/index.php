@@ -1,70 +1,56 @@
-<div>
-  <!-- Display message -->
-    <?php if (isset($_SESSION['message'])): ?>
-        <div id="message" class="<?php echo strpos($_SESSION['message'], 'error') !== false ? 'message-error' : 'message-success' ?> text-center">
-            <?php 
-                echo $_SESSION['message']; 
-                unset($_SESSION['message']);
-            ?>
+<!--views/admin/posts/index.php-->
+<?php
+// Start output buffering
+ob_start();
+?>
+<!-- Display message -->
+<?php if (isset($_SESSION['message'])): ?>
+        <div id="message" class="alert <?php echo strpos($_SESSION['message'], 'error') !== false ? 'alert-danger' : 'alert-success' ?> text-center">
+    <?php 
+        echo $_SESSION['message']; 
+        unset($_SESSION['message']);
+        ?>
         </div>
-    <?php endif; ?>
-    <div style="text-align: right;">
-        <!-- Create Post Button -->
-        <a href="/admin/posts/create">Create New Post</a>
-        | <!-- Add separator for clarity -->
-        <a href="/admin/categories/create">Create Categories</a>
-        | <!-- Add separator for clarity -->
-        <!-- User Login/Logout Links -->
-        <?php if (isLoggedIn()): ?>
-            <a href="/users/logout">Logout</a>
-        <?php else: ?>
-            <a href="/users/login">Login</a>
-        <?php endif; ?>
+<?php endif; ?>
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col text-end">
+            <!-- Create Post Button -->
+            <a href="/admin/posts/create" class="btn btn-success me-2">Create New Post</a>
+            <!-- Create Category Button -->
+            <a href="/admin/categories/create" class="btn btn-success">Create Categories</a>
+        </div>
     </div>
-    
+
     <?php foreach ($posts as $post): ?>
-        <div style="margin-bottom: 20px; margin-top: 20px;">
-            <div>
-                <h2><?php echo htmlspecialchars($post->title, ENT_QUOTES); ?></h2>
-                <p><?php echo htmlspecialchars($post->content, ENT_QUOTES); ?></p>
-                <a href="/admin/posts/show/<?php echo $post->id; ?>">View</a>
-                <a href="/admin/posts/edit/<?php echo $post->id; ?>">Edit</a>
-                <p><strong>Category:</strong> <?php echo $post->category_name ? htmlspecialchars($post->category_name, ENT_QUOTES) : 'No category'; ?></p>
-                <!-- Delete Post -->
-                <form action="/admin/posts/delete/<?php echo $post->id; ?>" method="POST" style="display: inline;">
-                    <input type="hidden" name="_method" value="DELETE">
-                    <button type="submit">Delete</button>
-                </form>
+        <div class="mb-3 mt-2 card">
+            <div class="card-body">
+                <h2 class="card-title"><?php echo htmlspecialchars($post->title, ENT_QUOTES); ?></h2>
+                <p class="card-text"><?php echo htmlspecialchars($post->content, ENT_QUOTES); ?></p>
+                <a href="/admin/posts/show/<?php echo $post->id; ?>" class="btn btn-info btn-sm">View</a>
+                <a href="/admin/posts/edit/<?php echo $post->id; ?>" class="btn btn-warning btn-sm">Edit</a>
+                <button type="button" onclick="deletePost(<?php echo $post->id; ?>)" class="btn btn-danger btn-sm">Delete</button>
+                </div>
+                </div>
+                <?php endforeach; ?>
+                <!-- Pagination Controls -->
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                    <!--we loop through each page number-->
+                        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                            <!--Check if the loop's current page number ($i e.g 3) is the same as the current page ($currentPage 3)-->
+                            <!--If yes, then this is the current page, so mark it as 'active'-->
+                            <!--If no, then it's just a regular page-->
+                            <li class="page-item <?php echo $i == $currentPage ? 'active' : ''; ?>">
+                            <!-- returns the page full url e.g http://admin/posts/posts?page=2 -->
+                                <a class="page-link" href="/admin/posts?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                            </li>
+                        <?php endfor; ?>
+                    </ul>
+                </nav>
             </div>
-        </div>
-    <?php endforeach; ?>
-    <!-- Pagination Controls -->
-    <nav aria-label="Page navigation">
-        <ul style="list-style: none; padding: 0;">
-            <!--we loop through each page number-->
-            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                <!--Check if the loop's current page number ($i, e.g., 3) is the same as the current page ($currentPage, 3)-->
-                <!--If yes, then this is the current page, so we could style it differently if needed-->
-                <li style="<?php echo $i == $currentPage ? 'font-weight: bold;' : ''; ?>">
-                    <!-- returns the page full URL e.g., http://admin/posts?page=2 -->
-                    <a href="/admin/posts?page=<?php echo $i; ?>"><?php echo $i; ?></a>
-                </li>
-            <?php endfor; ?>
-        </ul>
-    </nav>
-</div>
-
-<style>
-.message-success {
-color: green;
-/* other styling */
-}
-
-.message-error {
-    color: red;
-    background-color: #ffd6d6;
-    padding: 10px;
-    border: 1px solid red;
-    margin-bottom: 20px;
-}
-</style>
+<?php
+$content = ob_get_clean(); // Store buffered content in $content
+// Include the layout
+include BASE_DIR . '/public/Layouts/layout.php'; ?>
