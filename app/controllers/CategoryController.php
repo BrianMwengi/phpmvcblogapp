@@ -48,7 +48,7 @@ class CategoryController extends AuthController {
         if (!$category) {
             die('Category not found');
         }
-        require BASE_DIR . '/../views/admin/categories/edit.php';
+        require BASE_DIR . '/app/views/admin/categories/edit.php';
     }
 
     public function update($id, $data) {
