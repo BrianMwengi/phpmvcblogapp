@@ -25,6 +25,8 @@ $routes = [
         'admin/posts/create' => ['controller' => '\app\controllers\AdminController', 'method' => 'create'],
         'admin/posts/show/([0-9]+)' => ['controller' => '\app\controllers\AdminController', 'method' => 'show'],
         'admin/posts/edit/([0-9]+)' => ['controller' => '\app\controllers\AdminController', 'method' => 'edit'],
+        // Search For Posts
+        'search' => ['controller' => '\app\controllers\PostController', 'method' => 'search'],
 
         // Admin categories Routes
         'admin/categories/create' => ['controller' => '\app\controllers\CategoryController', 'method' => 'create'],
