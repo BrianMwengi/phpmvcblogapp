@@ -237,6 +237,7 @@ class AdminController extends AuthController {
                 $this->model->updatePost($id, $title, $content, $category_id, $imageFilename);
             
                 // Redirect to the posts page after successful update
+                $_SESSION['message'] = 'Post updated successfully!.';
                 header('Location: /admin/posts');
                 exit;
             } catch (Exception $e) {
