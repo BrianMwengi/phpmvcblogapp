@@ -42,4 +42,11 @@ class User {
         $stmt = $this->db->conn->prepare('DELETE FROM users WHERE id = ?');
         $stmt->execute([$id]); // Deletes the specified user
     }
+
+    public function doesUsernameExist($username) {
+        $stmt = $this->db->conn->prepare("SELECT COUNT(*) FROM users WHERE username = ?");
+        $stmt->execute([$username]);
+        $count = $stmt->fetchColumn();
+        return $count > 0;
+    }    
 }
