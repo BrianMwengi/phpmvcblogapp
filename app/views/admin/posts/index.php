@@ -55,21 +55,6 @@ $content = ob_get_clean(); // Store buffered content in $content
 include BASE_DIR . '/public/Layouts/layout.php'; ?>
 
 
-<style>
-.message-success {
-color: green;
-/* other styling */
-}
-
-.message-error {
-    color: red;
-    background-color: #ffd6d6;
-    padding: 10px;
-    border: 1px solid red;
-    margin-bottom: 20px;
-}
-</style>
-
 <script>
 // JavaScript Timeout functionality for admin posts
 window.onload = function() {
