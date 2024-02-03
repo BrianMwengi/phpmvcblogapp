@@ -105,7 +105,7 @@ class AdminController extends AuthController {
                 $newFileName = uniqid() . '-' . $fileName;
 
                 // Set the upload path for the image
-                $uploadPath = 'S:/xampp/htdocs/php8blogapp/public/images/'; // Define the directory where uploaded images will be stored
+                $uploadPath = 'S:/xampp/htdocs/php8mvcblog/public/images/'; // Define the directory where uploaded images will be stored
                 $destination = $uploadPath . $newFileName; // Concatenate the upload path with the new file name to create the full destination path
 
                 // Ensure the upload directory exists
@@ -207,7 +207,7 @@ class AdminController extends AuthController {
                     $newFileName = uniqid() . '-' . $fileName;
 
                     // Set the upload path
-                    $uploadPath = 'S:/xampp/htdocs/php8blogapp/public/images/';
+                    $uploadPath = 'S:/xampp/htdocs/php8mvcblog/public/images/';
                     $destination = $uploadPath . $newFileName;
                     // Ensure the upload directory exists
                     if (!file_exists($uploadPath)) {
