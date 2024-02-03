@@ -36,12 +36,3 @@ function deleteComment(commentId) {
     }
 }
 
-// JavaScript Timeout functionality for admin posts
-window.onload = function() {
-    setTimeout(function() {
-        var messageElement = document.getElementById('message');
-        if (messageElement) {
-            messageElement.style.display = 'none';
-        }
-    }, 5000); // 5000 milliseconds = 5 seconds
-};
