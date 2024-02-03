@@ -12,12 +12,13 @@ ob_start(); // Start output buffering
         </div>
     </div>
 
+    <h2 class="card-title">Categories</h2>
     <?php foreach ($categories as $category): ?>
         <div class="mb-3 mt-2 card">
           <div class="card-body">
-            <h2 class="card-title">Categories</h2>
             <p class="card-text"><?php echo htmlspecialchars($category->name, ENT_QUOTES); ?></p>
                 <a href="/admin/categories/edit/<?php echo $category->id; ?>" class="btn btn-warning btn-sm">Edit</a>
+                <a href="/admin/categories/posts/<?php echo $category->id; ?>" class="btn btn-warning btn-sm">View Post</a>
                 <form method="POST" action="/admin/categories/delete/<?php echo $category->id ?>" class="d-inline">
                     <button type="button" onclick="deleteCategory(<?php echo $category->id ?>)" class="btn btn-danger btn-sm">Delete</button>
                 </form>
