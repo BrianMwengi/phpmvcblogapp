@@ -45,3 +45,15 @@ $content = ob_get_clean(); // Store buffered content in $content
 
 // Include the layout
 include BASE_DIR . '/public/Layouts/layout.php'; ?>
+
+<script>
+// JavaScript Timeout functionality for admin posts
+window.onload = function() {
+    setTimeout(function() {
+        var messageElement = document.getElementById('message');
+        if (messageElement) {
+            messageElement.style.display = 'none';
+        }
+    }, 5000); // 5000 milliseconds = 5 seconds
+};
+</script>
