@@ -36,3 +36,21 @@ function deleteComment(commentId) {
     }
 }
 
+// JavaScript delete functionality for categories 
+function deleteCategory(categoryId) {
+    if (confirm("Are you sure you want to delete this category?")) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/admin/categories/delete/" + categoryId, true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onload = function() {
+            if (this.status === 200) {
+                // Handle success - remove the category from the page or reload
+                location.reload();
+            } else {
+                alert("Error deleting category.");
+            }
+        };
+        xhr.send("id=" + categoryId);
+    }
+}
+
