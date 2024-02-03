@@ -28,6 +28,23 @@ class PostController {
         require BASE_DIR . '/app/views/posts/index.php';
     }
 
+    public function search() {
+        // Get the search query from the URL
+        $query = $_GET['query'] ?? ''; 
+        // Initialize an empty array for posts
+        $posts = [];
+        
+        // Only fetch posts if the query is not empty
+        if (!empty($query)) {
+            $posts = $this->model->searchPosts($query);
+        } 
+        
+        // Load the view with search results
+        // The view will receive either the search results or an empty array if the query was empty
+        require BASE_DIR . '/app/views/posts/search-results.php'; 
+    }
+    
+
     // Display a single post
     public function show($id) {
         // Retrieve the specific post by its ID using the Post model
