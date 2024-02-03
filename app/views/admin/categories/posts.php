@@ -12,7 +12,6 @@ ob_start(); // Start output buffering
                     <h3 class="h5"><?php echo htmlspecialchars($post->title, ENT_QUOTES); ?></h3>
                     <p><?php echo htmlspecialchars($post->content, ENT_QUOTES); ?></p>
                     <!-- Add links for edit, delete, view, etc. here -->
-                    <!-- Example links (adjust href as necessary) -->
                     <a href="/admin/posts/edit/<?php echo $post->id; ?>" class="btn btn-primary btn-sm">Edit</a>
                     <button type="button" onclick="deletePost(<?php echo $post->id; ?>)" class="btn btn-danger btn-sm">Delete</button>
                     <a href="/admin/posts/show/<?php echo $post->id; ?>" class="btn btn-secondary btn-sm">View</a>
