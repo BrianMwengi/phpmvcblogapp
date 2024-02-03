@@ -94,6 +94,16 @@ class Post {
         }
     }
 
+    public function searchPosts($query) {
+        // Prepare the query for a LIKE statement
+        $query = "%" . $query . "%"; 
+        $stmt = $this->db->conn->prepare('SELECT posts.*, categories.name as category_name FROM posts LEFT JOIN categories ON posts.category_id = categories.id WHERE posts.title LIKE :query OR posts.content LIKE :query ORDER BY posts.id DESC');
+        $stmt->bindValue(':query', $query, \PDO::PARAM_STR);
+        $stmt->execute();
+        // Fetch and return the results
+        return $stmt->fetchAll(\PDO::FETCH_OBJ); 
+    }
+
     public function deletePost($id) {
         $stmt = $this->db->conn->prepare('DELETE FROM posts WHERE id = ?');
         $stmt->execute([$id]);
