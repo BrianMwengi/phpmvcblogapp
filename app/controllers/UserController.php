@@ -26,7 +26,15 @@ class UserController {
             header('Location: /users/register');
             exit();
         }
-    
+
+        // Check if the username already exists
+        if ($this->model->doesUsernameExist($data['username'])) {
+            // Handle the error, e.g., set an error message in the session
+            $_SESSION['message'] = "Username already exists. Please choose another username.";
+            header('Location: /users/register');
+            exit;
+        }
+            
         // Hash the password for secure storage
         $hashedPassword = password_hash($data['password'], PASSWORD_DEFAULT);
         // Create a new user record in the database
