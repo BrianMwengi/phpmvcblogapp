@@ -1,4 +1,8 @@
 <!-- admin/categories/posts.php -->
+<?php
+// Generate the specific content for this page
+ob_start(); // Start output buffering
+?>
 <div class="container mt-4">
     <h2 class="mb-3">Posts in Category: <?php echo htmlspecialchars($category->name, ENT_QUOTES); ?></h2>
     <?php if (!empty($posts)): ?>
@@ -9,9 +13,9 @@
                     <p><?php echo htmlspecialchars($post->content, ENT_QUOTES); ?></p>
                     <!-- Add links for edit, delete, view, etc. here -->
                     <!-- Example links (adjust href as necessary) -->
-                    <a href="/path/to/edit/<?php echo $post->id; ?>" class="btn btn-primary btn-sm">Edit</a>
-                    <a href="/path/to/delete/<?php echo $post->id; ?>" class="btn btn-danger btn-sm">Delete</a>
-                    <a href="/path/to/view/<?php echo $post->id; ?>" class="btn btn-secondary btn-sm">View</a>
+                    <a href="/admin/posts/edit/<?php echo $post->id; ?>" class="btn btn-primary btn-sm">Edit</a>
+                    <button type="button" onclick="deletePost(<?php echo $post->id; ?>)" class="btn btn-danger btn-sm">Delete</button>
+                    <a href="/admin/posts/show/<?php echo $post->id; ?>" class="btn btn-secondary btn-sm">View</a>
                 </div>
             <?php endforeach; ?>
         </div>
@@ -19,3 +23,7 @@
         <p class="alert alert-info">No posts found in this category.</p>
     <?php endif; ?>
 </div>
+<?php
+$content = ob_get_clean(); // Store buffered content in $content
+// Include the layout
+include BASE_DIR . '/public/Layouts/layout.php'; ?>
