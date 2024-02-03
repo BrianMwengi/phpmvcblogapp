@@ -3,17 +3,16 @@
 // Start output buffering
 ob_start();
 ?>
-<!-- Display message -->
-<?php if (isset($_SESSION['message'])): ?>
-        <div id="message" class="<?php echo strpos($_SESSION['message'], 'error') !== false ? 'message-error' : 'message-success' ?> text-center">
-            <?php 
-                echo $_SESSION['message']; 
-                unset($_SESSION['message']);
-            ?>
-        </div>
-    <?php endif; ?>
-
-    <div class="container mt-4">
+<div class="container mt-4">
+    <!-- Display message -->
+    <?php if (isset($_SESSION['message'])): ?>
+            <div id="message" class="<?php echo strpos($_SESSION['message'], 'error') !== false ? 'message-error' : 'message-success' ?> text-center">
+                <?php 
+                    echo $_SESSION['message']; 
+                    unset($_SESSION['message']);
+                ?>
+            </div>
+        <?php endif; ?>
     <div class="row">
         <div class="col text-end">
             <!-- Create Post Button -->
@@ -55,6 +54,7 @@ $content = ob_get_clean(); // Store buffered content in $content
 // Include the layout
 include BASE_DIR . '/public/Layouts/layout.php'; ?>
 
+
 <style>
 .message-success {
 color: green;
@@ -69,7 +69,6 @@ color: green;
     margin-bottom: 20px;
 }
 </style>
-
 
 <script>
 // JavaScript Timeout functionality for admin posts

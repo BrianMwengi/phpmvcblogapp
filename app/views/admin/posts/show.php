@@ -3,14 +3,14 @@
 ob_start();
 ?>
   <!-- Display message -->
-  <?php if (isset($_SESSION['message'])): ?>
-        <div id="message" class="alert <?php echo strpos($_SESSION['message'], 'error') !== false ? 'alert-danger' : 'alert-success' ?> text-center">
-        <?php 
-        echo $_SESSION['message']; 
-        unset($_SESSION['message']);
-        ?>
-    </div>
-  <?php endif; ?>
+<?php if (isset($_SESSION['message'])): ?>
+        <div id="message" class="<?php echo strpos($_SESSION['message'], 'error') !== false ? 'message-error' : 'message-success' ?> text-center">
+            <?php 
+                echo $_SESSION['message']; 
+                unset($_SESSION['message']);
+            ?>
+        </div>
+    <?php endif; ?>
   
 <div class="container mt-4">
     <!-- View all Post Button -->
