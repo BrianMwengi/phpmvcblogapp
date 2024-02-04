@@ -1,3 +1,14 @@
+// JavaScript Timeout functionality For Alert Messages
+document.addEventListener('DOMContentLoaded', function() {
+    // console.log("DOM fully loaded and parsed");
+    setTimeout(function() {
+        var messageElement = document.getElementById('message');
+        console.log("Looking for message element", messageElement);
+        if (messageElement) {
+            messageElement.style.display = 'none';
+        }
+    }, 5000); // Hide the message after 5 seconds
+});
 
  // JavaScript delete functionality for admin posts
  function deletePost(postId) {
@@ -53,4 +64,6 @@ function deleteCategory(categoryId) {
         xhr.send("id=" + categoryId);
     }
 }
+
+
 
