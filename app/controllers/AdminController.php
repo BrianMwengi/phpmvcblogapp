@@ -28,7 +28,7 @@ class AdminController extends AuthController {
        $totalPages = ceil($totalPosts / $postsPerPage);
     
         // Load the view for displaying posts
-        require __DIR__ . '/../views/admin/posts/index.php';
+        require BASE_DIR . '/app/views/admin/posts/index.php';
     }
     
     public function create() {
@@ -39,7 +39,7 @@ class AdminController extends AuthController {
         // Fetch all categories
         $categories = $categoryModel->getCategories();
         // Load the view for creating a new post
-        require __DIR__ . '/../views/admin/posts/create.php';
+        require BASE_DIR . '/app/views/admin/posts/create.php';
     }
     
 
@@ -51,7 +51,7 @@ class AdminController extends AuthController {
 
         if ($post === null) {
             // Post not found, display 404 page
-            require __DIR__ . '/../views/404.php';
+            require BASE_DIR . '/app/views/404.php';
             return;
         }
          // Create an instance of the Comment model
@@ -60,7 +60,7 @@ class AdminController extends AuthController {
          // Fetch the comments for the post
          $comments = $commentModel->getComments($id);
         // Load the view for displaying the single post
-        require __DIR__ . '/../views/admin/posts/show.php';
+        require BASE_DIR . '/app/views/admin/posts/show.php';
     }
 
     // Create: Store a new post
@@ -163,7 +163,7 @@ class AdminController extends AuthController {
         $categoryModel = new \app\models\Category;
         $categories = $categoryModel->getCategories();
         // Pass post and categories to the view
-        require __DIR__ . '/../views/admin/posts/edit.php';
+        require BASE_DIR . '/app/views/admin/posts/edit.php';
     }
 
     // Update: Update an existing post
