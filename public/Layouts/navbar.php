@@ -2,7 +2,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <!-- Logo on the left with some margin to push it to the right -->
         <a class="navbar-brand ms-3" href="/"> <!-- ms-3 for margin start -->
-            <img src="/images/bullet.png" alt="Logo" style="height: 40px;"> <!-- Adjust logo size as needed -->
+            <img src="/images/bullet.png" alt="Logo" style="height: 35px;"> <!-- Adjust logo size as needed -->
         </a>
         <!-- Toggler for mobile view -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
