@@ -92,9 +92,8 @@ foreach ($routes[$method] as $route => $info) {
     }
 }
 
-
 // If no route was matched, return a 404 response
 if (!isset($controller)) {
     http_response_code(404);
-    require __DIR__ . '/../app/views/404.php';
+    require BASE_DIR . '/app/views/404.php';
 }
