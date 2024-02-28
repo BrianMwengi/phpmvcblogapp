@@ -1,14 +1,6 @@
 <?php
-session_start();
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 
-// Define BASE_DIR as the absolute path to your project's root
-define('BASE_DIR', dirname(__DIR__));
-
-require BASE_DIR . '/vendor/autoload.php';
-require BASE_DIR . '/utils.php';
+require __DIR__ . '/../bootstrap.php'; 
 
 // Extract the path component from the full URL of the current request
 $request = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');

@@ -2,8 +2,8 @@
 
 namespace app\models;
 
-// Include database configuration file
-require_once BASE_DIR . '/config/db.php';
+// Include the bootstrap file for global setup
+require_once BASE_DIR . '/bootstrap.php';
 
 // Define class for managing posts
 class Post {

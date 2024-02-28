@@ -2,8 +2,8 @@
 
 namespace app\models;
 
-// Include database configuration file
-require_once __DIR__ . '/../../config/db.php';
+// Include the bootstrap file for global setup
+require_once BASE_DIR . '/bootstrap.php';
 
 class Category {
     private $db;

@@ -1,6 +1,6 @@
 <?php
 
-require BASE_DIR . '/config/db.php';
+require __DIR__ . '/../bootstrap.php'; 
 
 $db = new Database;
 
@@ -14,10 +14,7 @@ $query = "CREATE TABLE IF NOT EXISTS users (
 )";
 
 // Insert sample users
-// $query = "INSERT INTO users (username, password, is_admin) VALUES
-//     ('user1', '" . password_hash('password1', PASSWORD_DEFAULT) . "', 1),
-//     ('user2', '" . password_hash('password2', PASSWORD_DEFAULT) . "', 0),
-//     ('user3', '" . password_hash('password3', PASSWORD_DEFAULT) . "', 0)
-// ";
+$query = "INSERT INTO users (username, password, is_admin) VALUES
+   ('user1', '" . password_hash('password1', PASSWORD_DEFAULT) . "', 0) ";
 $db->conn->exec($query);
 echo "Users Table created successifully!";
