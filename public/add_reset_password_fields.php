@@ -1,6 +1,7 @@
 <?php
 
 require __DIR__ . '/../bootstrap.php';
+
 $db = new Database;
 
 $query = "ALTER TABLE users 
