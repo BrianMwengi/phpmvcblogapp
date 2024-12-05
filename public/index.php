@@ -19,6 +19,8 @@ $routes = [
         'admin/posts/edit/([0-9]+)' => ['controller' => '\app\controllers\AdminController', 'method' => 'edit'],
         // Search For Posts
         'search' => ['controller' => '\app\controllers\PostController', 'method' => 'search'],
+        // Migrate Database
+        'migrate' => ['controller' => '\app\controllers\MigrationController', 'method' => 'run'],
 
         // Admin categories Routes
         'admin/categories/create' => ['controller' => '\app\controllers\CategoryController', 'method' => 'create'],
