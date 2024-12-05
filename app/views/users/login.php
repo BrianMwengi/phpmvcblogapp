@@ -35,6 +35,9 @@ ob_start(); // Start output buffering
                                 <div class="text-center mt-3">
                                 <a href="/users/register">Not a member? Create Account</a>
                         </div>
+                        <div class="text-center mt-2">
+                            <a href="/users/forgot-password">Forgot Password?</a>
+                        </div>
                      </div>
                 </div>
             </div>
