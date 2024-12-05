@@ -110,4 +110,78 @@ class UserController {
             header('Location: /users/login');
             exit();
         }
+
+        // Display the forgot password form
+        public function showForgotPasswordForm() {
+            require BASE_DIR . '/app/views/users/forgot-password.php';
+        }
+        
+        public function resetPasswordRequest() {
+            $email = $_POST['email'] ?? '';
+            
+            if (empty($email)) {
+                $_SESSION['message'] = 'Email is required';
+                header('Location: /users/forgot-password');
+                exit();
+            }
+        
+            $user = $this->model->getUserByEmail($email);
+            
+            if ($user) {
+                $token = $this->model->createPasswordResetToken($email);
+                
+                // Send email with reset link
+                $resetLink = "http://" . $_SERVER['HTTP_HOST'] . "/users/reset-password/" . $token;
+                $to = $email;
+                $subject = "Password Reset Request";
+                $message = "Click the following link to reset your password: {$resetLink}";
+                $headers = "From: noreply@yourblog.com";
+                
+                mail($to, $subject, $message, $headers);
+                
+                $_SESSION['message'] = 'Password reset instructions have been sent to your email';
+                header('Location: /users/login');
+            } else {
+                $_SESSION['message'] = 'Email not found';
+                header('Location: /users/forgot-password');
+            }
+            exit();
+        }
+        
+        // Display the reset password form
+        public function showResetPasswordForm($token) {
+            $user = $this->model->verifyResetToken($token);
+            
+            if (!$user) {
+                $_SESSION['message'] = 'Invalid or expired reset token';
+                header('Location: /users/login');
+                exit();
+            }
+            
+            require BASE_DIR . '/app/views/users/reset-password.php';
+        }
+        
+        // Update the user password
+        public function updatePassword() {
+            $token = $_POST['token'] ?? '';
+            $password = $_POST['password'] ?? '';
+            $confirmPassword = $_POST['confirm_password'] ?? '';
+            
+            if ($password !== $confirmPassword) {
+                $_SESSION['message'] = 'Passwords do not match';
+                header("Location: /users/reset-password/{$token}");
+                exit();
+            }
+            
+            $user = $this->model->verifyResetToken($token);
+            
+            if ($user && $this->model->updatePassword($user->id, $password)) {
+                $_SESSION['message'] = 'Password has been updated successfully';
+                header('Location: /users/login');
+            } else {
+                $_SESSION['message'] = 'Error updating password';
+                header('Location: /users/forgot-password');
+            }
+            exit();
+        }
     }

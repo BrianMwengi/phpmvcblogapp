@@ -31,6 +31,11 @@ $routes = [
         'users/register' => ['controller' => '\app\controllers\UserController', 'method' => 'register'],
         'users/login' => ['controller' => '\app\controllers\UserController', 'method' => 'showLoginForm'],
         'users/logout' => ['controller' => '\app\controllers\UserController', 'method' => 'logout'],
+        // Forgot Password Routes
+        'users/forgot-password' => ['controller' => '\app\controllers\UserController', 'method' => 'showForgotPasswordForm'],
+        'users/reset-password-request' => ['controller' => '\app\controllers\UserController', 'method' => 'resetPasswordRequest'],
+        'users/reset-password/([A-Za-z0-9]+)' => ['controller' => '\app\controllers\UserController', 'method' => 'showResetPasswordForm'],
+        'users/update-password' => ['controller' => '\app\controllers\UserController', 'method' => 'updatePassword'],
         // Add more routes for other controllers and actions
     ],
     'POST' => [
