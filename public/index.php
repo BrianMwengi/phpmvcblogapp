@@ -56,6 +56,9 @@ $routes = [
          // User Auth Routes
          'users/store' => ['controller' => '\app\controllers\UserController', 'method' => 'store'],
          'users/authenticate' => ['controller' => '\app\controllers\UserController', 'method' => 'authenticate'],
+         // User Auth routes
+         'users/reset-password-request' => ['controller' => '\app\controllers\UserController', 'method' => 'resetPasswordRequest'],
+         'users/update-password' => ['controller' => '\app\controllers\UserController', 'method' => 'updatePassword']
     ]  
 ];
 
@@ -96,3 +99,6 @@ if (!isset($controller)) {
     http_response_code(404);
     require BASE_DIR . '/app/views/404.php';
 }
+
+
+

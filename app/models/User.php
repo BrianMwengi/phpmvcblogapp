@@ -27,9 +27,9 @@ class User {
     }
 
     // Creates a new user record
-    public function createUser($username, $password, $is_admin = 0) {
-        $stmt = $this->db->conn->prepare('INSERT INTO users (username, password, is_admin) VALUES (?, ?, ?)');
-        $stmt->execute([$username, $password, $is_admin]); // Inserts new user
+    public function createUser($username, $email, $password, $is_admin = 0) {
+        $stmt = $this->db->conn->prepare('INSERT INTO users (username, email, password, is_admin) VALUES (?, ?, ?, ?)');
+        return $stmt->execute([$username, $email, $password, $is_admin]);
     }
 
     // Updates an existing user's username and password
@@ -51,24 +51,48 @@ class User {
         return $count > 0;
     }
 
+    public function doesEmailExist($email) {
+        $stmt = $this->db->conn->prepare("SELECT COUNT(*) FROM users WHERE email = ?");
+        $stmt->execute([$email]);
+        $count = $stmt->fetchColumn();
+        return $count > 0;
+    }
+
     // Authenticates a user by username and password
     public function createPasswordResetToken($email) {
+        // Generate a secure random token
         $token = bin2hex(random_bytes(32));
-        $expires = date('Y-m-d H:i:s', strtotime('+1 hour'));
+        // Set expiration to 24 hours instead of 1 hour for testing
+        $expires = date('Y-m-d H:i:s', strtotime('+24 hours'));
         
-        $stmt = $this->db->conn->prepare('UPDATE users SET reset_token = ?, reset_expires = ? WHERE email = ?');
-        $stmt->execute([$token, $expires, $email]);
-        
-        return $token;
+        try {
+            $stmt = $this->db->conn->prepare('UPDATE users SET reset_token = ?, reset_expires = ? WHERE email = ?');
+            $success = $stmt->execute([$token, $expires, $email]);
+            
+            if (!$success) {
+                error_log("Failed to update reset token for email: $email");
+                return false;
+            }
+            
+            return $token;
+        } catch (PDOException $e) {
+            error_log("Database error while creating reset token: " . $e->getMessage());
+            return false;
+        }
     }
     
     // Verifies the password reset token
     public function verifyResetToken($token) {
-        $stmt = $this->db->conn->prepare('SELECT * FROM users WHERE reset_token = ? AND reset_expires > NOW() AND reset_token IS NOT NULL');
+        // Update query to be more lenient with expiration time check
+        $stmt = $this->db->conn->prepare('
+            SELECT * FROM users 
+            WHERE reset_token = ? 
+            AND reset_expires > NOW() 
+            AND reset_token IS NOT NULL
+        ');
         $stmt->execute([$token]);
         return $stmt->fetch(\PDO::FETCH_OBJ);
     }
-    
     // Updates the user's password
     public function updatePassword($userId, $newPassword) {
         $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
@@ -83,3 +107,4 @@ class User {
         return $stmt->fetch(\PDO::FETCH_OBJ);
     }
 }
+

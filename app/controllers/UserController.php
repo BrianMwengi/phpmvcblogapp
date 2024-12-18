@@ -20,11 +20,17 @@ class UserController {
     // Handle the user registration request
     public function store($data) {
         // Check if username and password are provided
-        if (empty($data['username']) || empty($data['password'])) {
-            // Set an error message and redirect to the registration page
-            $_SESSION['message'] = 'Username and password are required';
+        if (empty($data['username']) || empty($data['email']) || empty($data['password'])) {
+            $_SESSION['message'] = 'All fields are required';
             header('Location: /users/register');
-            exit();
+            exit;
+        }
+
+        // Validate email format
+        if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+            $_SESSION['message'] = 'Invalid email format';
+            header('Location: /users/register');
+            exit;
         }
 
         // Check if the username already exists
@@ -34,16 +40,25 @@ class UserController {
             header('Location: /users/register');
             exit;
         }
+
+        // Check if email exists
+        if ($this->model->doesEmailExist($data['email'])) {
+            $_SESSION['message'] = 'Email already exists';
+            header('Location: /users/register');
+            exit;
+        }
             
         // Hash the password for secure storage
         $hashedPassword = password_hash($data['password'], PASSWORD_DEFAULT);
         // Create a new user record in the database
-        $this->model->createUser($data['username'], $hashedPassword);
-    
-        // Set a success message and redirect to the login page
-        $_SESSION['message'] = 'Registration successful. Please log in.';
-        header('Location: /users/login');
-        exit();
+        if ($this->model->createUser($data['username'], $data['email'], $hashedPassword)) {
+            $_SESSION['message'] = 'Registration successful. Please log in.';
+            header('Location: /users/login');
+        } else {
+            $_SESSION['message'] = 'Registration failed. Please try again.';
+            header('Location: /users/register');
+        }
+        exit;
     }
     
     // Display the login form
@@ -53,30 +68,22 @@ class UserController {
 
     // Authenticate the user
     public function authenticate($data) {
-        // Validate the provided username and password
-        if (empty($data['username']) || empty($data['password'])) {
-            // Set an error message and redirect to the login page
-            $_SESSION['message'] = 'Username and password are required';
+        if (empty($data['email']) || empty($data['password'])) {
+            $_SESSION['message'] = 'Email and password are required';
             header('Location: /users/login');
             exit();
         }
 
         // Retrieve the user from the database
-        $user = $this->model->getUserByUsername($data['username']);
+        $user = $this->model->getUserByEmail($data['email']);
 
         // Check if the user exists and the password is correct
         // Access properties with -> since $user is now an object
         if ($user && password_verify($data['password'], $user->password)) {
-            // Initialize session with user info
-            // Make sure to access properties as object properties, not array keys
             $this->initializeUserSession($user);
-
-            // Redirect user to the appropriate page based on their role
-            // Again, accessing is_admin as an object property
             $this->redirectBasedOnRole($user->is_admin);
         } else {
-            // If authentication fails, set an error message and redirect
-            $_SESSION['message'] = 'Invalid username or password';
+            $_SESSION['message'] = 'Invalid email or password';
             header('Location: /users/login');
             exit();
         }
@@ -128,19 +135,50 @@ class UserController {
             $user = $this->model->getUserByEmail($email);
             
             if ($user) {
-                $token = $this->model->createPasswordResetToken($email);
-                
-                // Send email with reset link
-                $resetLink = "http://" . $_SERVER['HTTP_HOST'] . "/users/reset-password/" . $token;
-                $to = $email;
-                $subject = "Password Reset Request";
-                $message = "Click the following link to reset your password: {$resetLink}";
-                $headers = "From: noreply@yourblog.com";
-                
-                mail($to, $subject, $message, $headers);
-                
-                $_SESSION['message'] = 'Password reset instructions have been sent to your email';
-                header('Location: /users/login');
+                try {
+                    // Generate and save token
+                    $token = $this->model->createPasswordResetToken($email);
+                    
+                    // Configure PHPMailer
+                    $mail = new \PHPMailer\PHPMailer\PHPMailer(true);
+                    $mail->isSMTP();
+                    $mail->Host = 'smtp.gmail.com';
+                    $mail->SMTPAuth = true;
+                    $mail->Username = 'mwengibrian@gmail.com';
+                    $mail->Password = 'pmmp stmc nner gsdq';
+                    $mail->SMTPSecure = \PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
+                    $mail->Port = 587;
+                    
+                    // Set SSL options
+                    $mail->SMTPOptions = [
+                        'ssl' => [
+                            'verify_peer' => false,
+                            'verify_peer_name' => false,
+                            'allow_self_signed' => true
+                        ]
+                    ];
+                    
+                    // Build email content
+                    $resetLink = "http://" . $_SERVER['HTTP_HOST'] . "/users/reset-password/" . $token;
+                    
+                    $mail->setFrom('mwengibrian@gmail.com', 'PHP MVC Blog');
+                    $mail->addAddress($email);
+                    $mail->isHTML(true);
+                    $mail->Subject = 'Password Reset Request';
+                    $mail->Body = "Click the following link to reset your password: <a href='{$resetLink}'>{$resetLink}</a>";
+                    $mail->AltBody = "Click the following link to reset your password: {$resetLink}";
+                    
+                    $mail->send();
+                    
+                    // Log success
+                    error_log("Reset email sent to: $email with token: $token");
+                    $_SESSION['message'] = 'Password reset instructions have been sent to your email';
+                    header('Location: /users/login');
+                } catch (Exception $e) {
+                    error_log("Email sending failed: " . $e->getMessage());
+                    $_SESSION['message'] = 'Error sending email. Please try again later.';
+                    header('Location: /users/forgot-password');
+                }
             } else {
                 $_SESSION['message'] = 'Email not found';
                 header('Location: /users/forgot-password');
@@ -153,6 +191,8 @@ class UserController {
             $user = $this->model->verifyResetToken($token);
             
             if (!$user) {
+                // Add debug information
+                error_log("Token validation failed. Token: " . $token);
                 $_SESSION['message'] = 'Invalid or expired reset token';
                 header('Location: /users/login');
                 exit();
@@ -185,3 +225,9 @@ class UserController {
             exit();
         }
     }
+
+   
+
+
+
+        

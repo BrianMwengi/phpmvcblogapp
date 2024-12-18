@@ -13,3 +13,4 @@ foreach ($migrations as $migration) {
 }
 
 echo "All migrations completed!\n";
+
